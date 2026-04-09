@@ -1,4 +1,4 @@
-package com.CRM.Entity;
+package com.sunbeam.crm.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-
 @Entity
-@AllArgsConstructor @NoArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class Customer {
 

@@ -1,4 +1,4 @@
-package com.CRM;
+package com.sunbeam.crm;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

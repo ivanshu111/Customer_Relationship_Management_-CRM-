@@ -1,4 +1,4 @@
-package com.CRM.Entity;
+package com.sunbeam.crm.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
