@@ -6,6 +6,7 @@ import com.sunbeam.crm.dto.RegisterRequest;
 import com.sunbeam.crm.security.JwtUtils;
 import com.sunbeam.crm.security.UserDetailsImpl;
 import com.sunbeam.crm.service.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest){
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest){
         Authentication authentication;
 
         try {
@@ -61,7 +62,7 @@ public class AuthController {
 
     @PostMapping("/register")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest){
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest registerRequest){
         authService.register(registerRequest);
         return ResponseEntity.status(201).body("User registered successfully!");
     }
