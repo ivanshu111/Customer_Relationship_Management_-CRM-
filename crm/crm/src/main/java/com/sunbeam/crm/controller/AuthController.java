@@ -2,11 +2,14 @@ package com.sunbeam.crm.controller;
 
 import com.sunbeam.crm.dto.LoginRequest;
 import com.sunbeam.crm.dto.LoginResponse;
+import com.sunbeam.crm.dto.RegisterRequest;
 import com.sunbeam.crm.security.JwtUtils;
 import com.sunbeam.crm.security.UserDetailsImpl;
+import com.sunbeam.crm.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -27,6 +30,7 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
+    private final AuthService authService;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest){
@@ -53,5 +57,12 @@ public class AuthController {
                 .orElse("");
 
         return ResponseEntity.ok(new LoginResponse(jwtToken, role));
+    }
+
+    @PostMapping("/register")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest){
+        authService.register(registerRequest);
+        return ResponseEntity.status(201).body("User registered successfully!");
     }
 }
