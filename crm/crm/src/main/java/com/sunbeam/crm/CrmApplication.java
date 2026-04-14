@@ -22,7 +22,7 @@ public class CrmApplication {
 //			if(repo.findByEmail("ivanshu@gmail.com").isEmpty()) {
 //				Users admin = new Users();
 //				admin.setEmail("ivanshu@gmail.com");
-//				admin.setPassword(encoder.encode("ivanshu007"));
+//				admin.setPassword(encoder.encode("********"));
 //				admin.setRole(Role.ADMIN);
 //				repo.save(admin);
 //			}
