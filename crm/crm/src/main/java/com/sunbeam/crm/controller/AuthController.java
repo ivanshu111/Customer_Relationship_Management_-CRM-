@@ -3,6 +3,7 @@ package com.sunbeam.crm.controller;
 import com.sunbeam.crm.dto.LoginRequest;
 import com.sunbeam.crm.dto.LoginResponse;
 import com.sunbeam.crm.dto.RegisterRequest;
+import com.sunbeam.crm.dto.UserResponseDto;
 import com.sunbeam.crm.security.JwtUtils;
 import com.sunbeam.crm.security.UserDetailsImpl;
 import com.sunbeam.crm.service.AuthService;
@@ -16,6 +17,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,5 +67,11 @@ public class AuthController {
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest registerRequest){
         authService.register(registerRequest);
         return ResponseEntity.status(201).body("User registered successfully!");
+    }
+
+     //logged-in user can fetch his profile
+    @GetMapping("/profile")
+    public ResponseEntity<UserResponseDto> getProfile() {
+        return ResponseEntity.ok(authService.getProfile());
     }
 }

@@ -7,7 +7,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Data
 @AllArgsConstructor @NoArgsConstructor
@@ -17,24 +22,22 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @NotBlank
-    @Column(nullable = false)
     private String name;
 
-    @Column(unique = true, nullable = false)
-    @NotBlank
-    @Email
+    @Column(unique = true)
     private String email;
 
-    @NotBlank
-    @Column(nullable = false)
+    @JsonIgnore
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private Role role;
 
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "assignedTo")
     private List<Customer> customers;
 }
