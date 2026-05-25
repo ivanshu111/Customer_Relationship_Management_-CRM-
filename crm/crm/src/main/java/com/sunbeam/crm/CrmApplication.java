@@ -23,6 +23,7 @@ public class CrmApplication {
 //				Users admin = new Users();
 //				admin.setEmail("ivanshu@gmail.com");
 //				admin.setPassword(encoder.encode("**********"));
+//				admin.setPassword(encoder.encode("********"));
 //				admin.setRole(Role.ADMIN);
 //				repo.save(admin);
 //			}
