@@ -42,4 +42,19 @@ public class AdminController {
         }
         return ResponseEntity.ok(bestEmployee);
     }
+
+    @GetMapping("/customers") 
+    @PreAuthorize("hasRole('ADMIN')") 
+    public ResponseEntity<?> getAllCustomers(){ 
+        List<CustomerResponseDto> customers= adminService.getAllCustomers(); 
+        return ResponseEntity.ok(customers); 
+    }
+
+    @GetMapping("/employee/{id}/customers") 
+    @PreAuthorize("hasRole('ADMIN')") 
+    public ResponseEntity<?> getAllCustomersOfEmployee(@PathVariable Integer id){ 
+      List<CustomerResponseDto> customers= 
+    adminService.getAllCustomersOfEmployee(id); 
+      return ResponseEntity.ok(customers); 
+    }
 }
