@@ -63,5 +63,16 @@ public class AdminServiceImpl implements AdminService {
         }
         return dto;
     }
+
+    @Override 
+    public List<InteractionResponseDto> getAllInteractions() { 
+        return interactionRepository.findAll().stream() 
+            .map(interaction -> { 
+                InteractionResponseDto dto = modelMapper.map(interaction, InteractionResponseDto.class); 
+                dto.setEmployee(mapToDto(interaction.getEmployee())); 
+                dto.setCustomer(mapToCustomerDto(interaction.getCustomer())); 
+                return dto; 
+            }).toList(); 
+        }
   
 }

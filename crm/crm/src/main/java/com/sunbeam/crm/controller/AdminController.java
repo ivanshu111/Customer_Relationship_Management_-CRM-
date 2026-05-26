@@ -42,4 +42,12 @@ public class AdminController {
         }
         return ResponseEntity.ok(bestEmployee);
     }
+    
+    @GetMapping("/interactions") 
+    @PreAuthorize("hasRole('ADMIN')") 
+    public ResponseEntity<?> getAllInteractions(){ 
+	    List<InteractionResponseDto> interactions= adminService.getAllInteractions(); 
+	    return ResponseEntity.ok(interactions); 
+    }
+    
 }
