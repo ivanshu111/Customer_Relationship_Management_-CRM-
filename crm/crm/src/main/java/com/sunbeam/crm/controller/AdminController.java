@@ -1,5 +1,6 @@
 package com.sunbeam.crm.controller;
 
+import com.sunbeam.crm.dto.EmployeeResponseDto;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -57,4 +58,19 @@ public class AdminController {
     adminService.getAllCustomersOfEmployee(id); 
       return ResponseEntity.ok(customers); 
     }
+    @GetMapping("/employees")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?>getAllEmployees(){
+        List<EmployeeResponseDto> employees = adminService.getAllEmployees();
+        return ResponseEntity.ok(employees);
+    }
+
+    @GetMapping("/employees/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?>getEmployeeById(@PathVariable Integer id){
+        EmployeeResponseDto employee = adminService.getEmployeeById(id);
+        return ResponseEntity.ok(employee);
+    }
+
+
 }
