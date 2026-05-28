@@ -1,5 +1,6 @@
 package com.sunbeam.crm.controller;
 
+import com.sunbeam.crm.dto.EmployeeResponseDto;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
