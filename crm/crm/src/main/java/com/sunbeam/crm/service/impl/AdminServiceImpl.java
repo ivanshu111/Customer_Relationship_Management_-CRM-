@@ -64,6 +64,8 @@ public class AdminServiceImpl implements AdminService {
         return dto;
     }
 
+    
+
     @Override 
     public List<InteractionResponseDto> getAllInteractions() { 
         return interactionRepository.findAll().stream() 

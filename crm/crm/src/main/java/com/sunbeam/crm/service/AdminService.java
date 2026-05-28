@@ -4,6 +4,5 @@ public interface AdminService {
    double getConversionRate();
 
     String getBestPerformingEmployee();
-
     List<InteractionResponseDto> getAllInteractions();
 }
