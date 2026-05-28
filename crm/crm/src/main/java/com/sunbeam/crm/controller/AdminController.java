@@ -43,34 +43,12 @@ public class AdminController {
         }
         return ResponseEntity.ok(bestEmployee);
     }
-
-    @GetMapping("/customers") 
+    
+    @GetMapping("/interactions") 
     @PreAuthorize("hasRole('ADMIN')") 
-    public ResponseEntity<?> getAllCustomers(){ 
-        List<CustomerResponseDto> customers= adminService.getAllCustomers(); 
-        return ResponseEntity.ok(customers); 
+    public ResponseEntity<?> getAllInteractions(){ 
+        List<InteractionResponseDto> interactions= adminService.getAllInteractions();
+        return ResponseEntity.ok(interactions); 
     }
-
-    @GetMapping("/employee/{id}/customers") 
-    @PreAuthorize("hasRole('ADMIN')") 
-    public ResponseEntity<?> getAllCustomersOfEmployee(@PathVariable Integer id){ 
-      List<CustomerResponseDto> customers= 
-    adminService.getAllCustomersOfEmployee(id); 
-      return ResponseEntity.ok(customers); 
-    }
-    @GetMapping("/employees")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?>getAllEmployees(){
-        List<EmployeeResponseDto> employees = adminService.getAllEmployees();
-        return ResponseEntity.ok(employees);
-    }
-
-    @GetMapping("/employees/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?>getEmployeeById(@PathVariable Integer id){
-        EmployeeResponseDto employee = adminService.getEmployeeById(id);
-        return ResponseEntity.ok(employee);
-    }
-
-
+    
 }

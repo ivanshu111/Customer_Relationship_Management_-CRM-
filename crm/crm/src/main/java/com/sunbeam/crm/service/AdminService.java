@@ -8,6 +8,5 @@ public interface AdminService {
    double getConversionRate();
 
     String getBestPerformingEmployee();
-    List<EmployeeResponseDto> getAllEmployees();
-    EmployeeResponseDto getEmployeeById(Integer id);
+    List<InteractionResponseDto> getAllInteractions();
 }

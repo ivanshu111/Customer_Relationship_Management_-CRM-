@@ -67,16 +67,17 @@ public class AdminServiceImpl implements AdminService {
         return dto;
     }
 
-    @Override
-    public List<EmployeeResponseDto> getAllEmployees(){
-         List<Users> users = userRepository.findByRole(Role.EMPLOYEE);
-         return users.stream().map(user->mapToDto(user)).collect(Collectors.toList());
-    }
+    
 
-    @Override
-    public EmployeeResponseDto getEmployeeById(Integer id){
-         Users user = userRepository.findById(id).orElseThrow(()->new RuntimeException("Employee not found."));
-         return mapToDto(user);
-    }
+    @Override 
+    public List<InteractionResponseDto> getAllInteractions() { 
+        return interactionRepository.findAll().stream() 
+            .map(interaction -> { 
+                InteractionResponseDto dto = modelMapper.map(interaction, InteractionResponseDto.class); 
+                dto.setEmployee(mapToDto(interaction.getEmployee())); 
+                dto.setCustomer(mapToCustomerDto(interaction.getCustomer())); 
+                return dto; 
+            }).toList(); 
+        }
   
 }
