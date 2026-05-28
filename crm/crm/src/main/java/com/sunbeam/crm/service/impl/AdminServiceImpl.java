@@ -3,7 +3,10 @@ package com.sunbeam.crm.service.impl;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import com.sunbeam.crm.entity.Role;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -62,6 +65,18 @@ public class AdminServiceImpl implements AdminService {
             dto.setAssignedToName(customer.getAssignedTo().getName());
         }
         return dto;
+    }
+
+    @Override
+    public List<EmployeeResponseDto> getAllEmployees(){
+         List<Users> users = userRepository.findByRole(Role.EMPLOYEE);
+         return users.stream().map(user->mapToDto(user)).collect(Collectors.toList());
+    }
+
+    @Override
+    public EmployeeResponseDto getEmployeeById(Integer id){
+         Users user = userRepository.findById(id).orElseThrow(()->new RuntimeException("Employee not found."));
+         return mapToDto(user);
     }
   
 }
