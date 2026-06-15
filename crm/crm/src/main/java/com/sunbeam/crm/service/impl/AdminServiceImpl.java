@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+
 import java.util.stream.Collectors;
 
 import com.sunbeam.crm.entity.Role;
@@ -79,4 +80,16 @@ public class AdminServiceImpl implements AdminService {
          return mapToDto(user);
     }
   
+    @Override 
+    public List<CustomerResponseDto> getAllCustomers() { 
+        return customerRepository.findAll().stream() 
+        .map(customer -> mapToCustomerDto(customer)) 
+        .toList(); 
+    }
+
+    @Override public List<CustomerResponseDto> getAllCustomersOfEmployee(Integer id) { 
+        return customerRepository.findByAssignedToId(id).stream() 
+        .map(customer -> mapToCustomerDto(customer)) 
+        .toList(); 
+    }
 }
