@@ -8,4 +8,6 @@ public interface CustomerService {
    void updateLeadStatus(Integer customerId, LeadStatus status);
     CustomerResponseDto updateCustomer(Integer customerId, CustomerRequestDto customerRequestDto);
      CustomerResponseDto addCustomer(CustomerRequestDto customerRequestDto);
+   CustomerResponseDto getCustomerById(Integer customerId);
+   List<CustomerResponseDto> getNotInterestedCustomers();
 }

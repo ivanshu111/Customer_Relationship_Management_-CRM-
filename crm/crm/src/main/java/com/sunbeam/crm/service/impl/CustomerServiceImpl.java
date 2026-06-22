@@ -1,6 +1,7 @@
 package com.sunbeam.crm.service.impl;
 
 import java.util.Comparator;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -167,5 +168,40 @@ public class CustomerServiceImpl implements CustomerService{
         
         return responseDto;
     }
+
+    //API to fetch customer by ID
+    @Override 
+    public CustomerResponseDto getCustomerById(Integer customerId) { 
+        String email = SecurityContextHolder.getContext().getAuthentication().getName(); 
+        Users loggedInUser = userRepository.findByEmail(email) 
+            .orElseThrow(() -> new RuntimeException("User not found")); 
+        
+        Customer customer; 
+        if (loggedInUser.getRole() == Role.ADMIN) { 
+            customer = customerRepository.findById(customerId) 
+                .orElseThrow(() -> new RuntimeException("Customer not found")); 
+        } else { 
+            customer = customerRepository.findByIdAndAssignedTo(customerId, loggedInUser) 
+                .orElseThrow(() -> new RuntimeException("Customer not found or not assigned to you")); 
+        } 
+        return mapToResponseDto(customer); 
+    }
   
+    //API to fetch customers with status NOT interested.
+    @Override 
+    public List<CustomerResponseDto> getNotInterestedCustomers() { 
+        String email= SecurityContextHolder.getContext().getAuthentication().getName(); 
+        Users loggedInUser= userRepository.findByEmail(email) 
+            .orElseThrow(()->new RuntimeException("User not found")); 
+            
+        List<Customer> customers; 
+        if(loggedInUser.getRole() == Role.ADMIN){ 
+            customers= customerRepository.findByLeadStatus(LeadStatus.NOT_INTERESTED); 
+        }
+        else{ 
+            customers=customerRepository.findByAssignedToAndLeadStatus(loggedInUser, LeadStatus.NOT_INTERESTED); 
+        } 
+        return customers.stream().map(customer -> mapToResponseDto(customer))
+            .collect(Collectors.toList()); 
+        }
 }
