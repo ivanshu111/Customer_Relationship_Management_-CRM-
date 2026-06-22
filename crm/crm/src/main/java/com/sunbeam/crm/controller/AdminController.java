@@ -51,4 +51,11 @@ public class AdminController {
         return ResponseEntity.ok(interactions); 
     }
     
+
+    @GetMapping("/leads/closed") 
+    @PreAuthorize("hasRole('ADMIN')") 
+    public ResponseEntity<Long> getLeadsCountWithStatusClosed(){ 
+	long count= leadsService.getLeadsCountWithStatusClosed();
+	return ResponseEntity.ok(count); 
+    }
 }

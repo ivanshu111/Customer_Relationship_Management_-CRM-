@@ -12,4 +12,9 @@ import lombok.RequiredArgsConstructor;
 public class LeadsServiceImpl implements LeadsService {
  
    private final LeadsRepository leadsRepository;
+
+   @Override 
+   public long getLeadsCountWithStatusClosed() { 
+      return leadsRepository.countByStatus(LeadStatus.CLOSED); 
+   }
 }
