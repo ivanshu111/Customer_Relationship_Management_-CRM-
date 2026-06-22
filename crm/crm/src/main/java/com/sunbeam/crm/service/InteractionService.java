@@ -5,4 +5,5 @@ import com.sunbeam.crm.dto.InteractionResponseDto;
 
 public interface InteractionService {
    InteractionResponseDto createInteraction(InteractionRequestDto dto);
+   List<InteractionResponseDto> getCustomerInteractions(Integer customerId);
 }

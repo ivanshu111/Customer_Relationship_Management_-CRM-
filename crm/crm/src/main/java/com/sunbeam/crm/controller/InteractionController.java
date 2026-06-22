@@ -23,5 +23,12 @@ public class InteractionController {
         interactionService.createInteraction(dto);
         return ResponseEntity.ok("Interaction created successfully...!");
     }
+
+    @GetMapping("/customer/{id}") 
+    @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')") 
+    public ResponseEntity<?> getCustomerInteractions(@PathVariable Integer id){ 
+	    List<InteractionResponseDto> response = interactionService.getCustomerInteractions(id);
+	    return ResponseEntity.ok(response); 
+    }
   
 }

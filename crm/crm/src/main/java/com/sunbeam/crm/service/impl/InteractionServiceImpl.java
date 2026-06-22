@@ -102,5 +102,24 @@ public class InteractionServiceImpl implements InteractionService {
 
         return responseDto;
     }
+
+    @Override 
+    public List<InteractionResponseDto> getCustomerInteractions(Integer customerId) { 
+	String email = SecurityContextHolder.getContext().getAuthentication().getName(); 
+	Users loggedInUser = userRepository.findByEmail(email) 
+		.orElseThrow(() -> new RuntimeException("Logged-in user not found")); 
+	Customer customer = customerRepository.findById(customerId) 
+		.orElseThrow(() -> new RuntimeException("Customer not found with ID: " + customerId));
+	 
+	// Authorization check 
+	if (loggedInUser.getRole() != Role.ADMIN) { 
+		if (customer.getAssignedTo() == null || !customer.getAssignedTo().getId().equals(loggedInUser.getId())) { 
+			throw new RuntimeException("You are not authorized to view interactions for this customer."); 
+		} 
+	} 
+	List<Interaction> interactions = interactionRepository.findByCustomerId(customerId); 
+	
+	return interactions.stream().map(interaction -> mapToResponseDto(interaction)).collect(Collectors.toList()); 
+}
   
 }
