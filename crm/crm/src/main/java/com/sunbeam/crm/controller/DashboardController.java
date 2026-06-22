@@ -18,5 +18,11 @@ import com.sunbeam.crm.service.CustomerService;
 public class DashboardController {
 
   private final CustomerService customerService;
-
+  @GetMapping("/customers/count") 
+  @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')") 
+  public ResponseEntity<Long> getCustomerCount(@RequestParam(required = false) 
+  Integer employeeId) { 
+    long count = customerService.getCustomerCount(employeeId); 
+    return ResponseEntity.ok(count); 
+  }
 }

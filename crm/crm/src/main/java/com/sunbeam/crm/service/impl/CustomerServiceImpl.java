@@ -204,4 +204,27 @@ public class CustomerServiceImpl implements CustomerService{
         return customers.stream().map(customer -> mapToResponseDto(customer))
             .collect(Collectors.toList()); 
         }
+
+    @Override 
+    public long getCustomerCount(Integer employeeId) { 
+        //get the currently logged-in user's email
+        String email = SecurityContextHolder.getContext().getAuthentication().getName(); 
+            
+        //takes the email and look up in db for user profile 
+        Users loggedInUser = userRepository.findByEmail(email) 
+            .orElseThrow(() -> new RuntimeException("User not found")); 
+                
+        if (employeeId != null) { 
+            if (loggedInUser.getRole() == Role.ADMIN) { 
+                Users targetUser = userRepository.findById(employeeId) 
+                    .orElseThrow(() -> new RuntimeException("Employee not found")); 
+                return customerRepository.countByAssignedTo(targetUser); 
+            } 
+            else if (!loggedInUser.getId().equals(employeeId)) { 
+                throw new RuntimeException("You are not authorized to fetch another employee's customer count."); 
+            } 
+        } 
+            
+        return customerRepository.countByAssignedTo(loggedInUser); 
+    }
 }

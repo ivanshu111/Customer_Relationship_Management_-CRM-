@@ -10,4 +10,5 @@ public interface CustomerService {
      CustomerResponseDto addCustomer(CustomerRequestDto customerRequestDto);
    CustomerResponseDto getCustomerById(Integer customerId);
    List<CustomerResponseDto> getNotInterestedCustomers();
+   long getCustomerCount(Integer employeeId);
 }
