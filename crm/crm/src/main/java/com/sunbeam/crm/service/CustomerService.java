@@ -7,6 +7,8 @@ import com.sunbeam.crm.entity.LeadStatus;
 public interface CustomerService {
    void updateLeadStatus(Integer customerId, LeadStatus status);
     CustomerResponseDto updateCustomer(Integer customerId, CustomerRequestDto customerRequestDto);
-     CustomerResponseDto addCustomer(CustomerRequestDto customerRequestDto);
-     List<CustomerResponseDto> getMyCustomers();
+    CustomerResponseDto addCustomer(CustomerRequestDto customerRequestDto);
+    List<CustomerResponseDto> getMyCustomers();
+    List<CustomerResponseDto> getInterestedCustomers();
+
 }

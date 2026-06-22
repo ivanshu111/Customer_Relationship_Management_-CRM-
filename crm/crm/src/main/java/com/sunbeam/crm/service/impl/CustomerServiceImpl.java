@@ -187,5 +187,18 @@ public class CustomerServiceImpl implements CustomerService{
         .map(customer -> mapToResponseDto(customer)) 
         .collect(Collectors.toList()); 
     }
-  
+
+
+    @Override 
+    public List<CustomerResponseDto> getInterestedCustomers() { 
+        String email = SecurityContextHolder.getContext().getAuthentication().getName(); 
+        Users loggedInUser = userRepository.findByEmail(email) 
+        .orElseThrow(() -> new RuntimeException("User not found")); 
+        List<Customer> customers; 
+        if (loggedInUser.getRole() == Role.ADMIN) { 
+            customers = customerRepository.findByLeadStatus(LeadStatus.INTERESTED); 
+        } 
+        else { customers = customerRepository.findByAssignedToAndLeadStatus(loggedInUser, LeadStatus.INTERESTED); 
+        } 
+        return customers.stream().map(customer -> mapToResponseDto(customer)).collect(Collectors.toList()); }
 }

@@ -42,4 +42,11 @@ public class CustomerController {
         List<CustomerResponseDto> customers = customerService.getMyCustomers(); 
         return ResponseEntity.ok(customers); 
     }
+
+    @GetMapping("/interested") 
+    @PreAuthorize("hasAnyRole('ADMIN','EMPLOYEE')") 
+    public ResponseEntity<?> getInterestedCustomers(){
+         List<CustomerResponseDto> customers = customerService.getInterestedCustomers();
+          return ResponseEntity.ok(customers); 
+    }
 }
